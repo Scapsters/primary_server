@@ -29,6 +29,8 @@ const app = express()
             router: {
                 "scrapstack.net": "http://localhost:1000",
                 "www.scrapstack.net": "http://localhost:1000",
+                "furryslop.com": "http://localhost:1000",
+                "www.furryslop.com": "http://localhost:1000",
             },
             changeOrigin: true,
         })
