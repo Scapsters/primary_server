@@ -11,24 +11,28 @@ const makePath = (relativePath: string) => path.join(__dirname, relativePath);
 
 // SSL certificates (HTTPS)
 const options = {
-    key: fs.readFileSync(makePath("../portfolio_slop_certs/key.pem")),
-    cert: fs.readFileSync(makePath("../portfolio_slop_certs/cert.pem")),
+    key: fs.readFileSync(makePath("../scrapstack_certs/scrapstack.net-key.pem")),
+    cert: fs.readFileSync(makePath("../scrapstack_certs/scrapstack.net-crt.pem")),
 };
 
 const app = express()
-    .use('*', (req, res, next) => {
-        console.log(`[${new Date().toLocaleString()}] ${req.method} ${req.url}, host: ${req.headers.host}`);
+    .use("*", (req, res, next) => {
+        console.log(
+            `[${new Date().toLocaleString()}] ${req.method} ${req.url}, host: ${
+                req.headers.host
+            }`
+        );
         next();
     })
-    .use(createProxyMiddleware({
-    router: {
-        "furryslop.com": "http://localhost:1000",
-        "scotthappy.com": "http://localhost:2000",
-        "www.furryslop.com": "http://localhost:1000",
-        "www.scotthappy.com": "http://localhost:2000",
-    },
-    changeOrigin: true
-}));
+    .use(
+        createProxyMiddleware({
+            router: {
+                "furryslop.com": "http://localhost:1000",
+                "www.furryslop.com": "http://localhost:1000",
+            },
+            changeOrigin: true,
+        })
+    );
 
 https.createServer(options, app).listen(443, "0.0.0.0", () => {
     console.log(`Server is running on port 443 (HTTPS)`);
