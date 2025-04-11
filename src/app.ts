@@ -27,8 +27,8 @@ const app = express()
     .use(
         createProxyMiddleware({
             router: {
-                "furryslop.com": "http://localhost:1000",
-                "www.furryslop.com": "http://localhost:1000",
+                "scrapstack.net": "http://localhost:1000",
+                "www.scrapstack.net": "http://localhost:1000",
             },
             changeOrigin: true,
         })
